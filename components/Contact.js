@@ -271,7 +271,7 @@ export default function Contact() {
                                                         {/* 🎯 FIX 2: Use the dedicated phone handler */}
                                                         <PhoneInput
                                                             name="phone"
-                                                            country={"ae"}
+                                                            country={"gb"}
                                                             value={formData.phone}
   onChange={(value) =>
     setFormData({
