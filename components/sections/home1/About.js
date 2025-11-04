@@ -40,9 +40,7 @@ export default function About() {
                                 </div>
 
                                 <div className="text-box">
-                                    <p>Home to iconic landmarks like Dubai Creek Marina and the Ras Al Khor Wildlife Sanctuary, Dubai Creek Harbour blends urban sophistication with natural beauty. Stroll along peaceful lagoons, enjoy waterfront dining, and take in panoramic skyline views.</p><br/>
-                                    <p>Perfectly connected to Downtown Dubai, Dubai International Airport, and the upcoming Metro expansion, it offers unmatched convenience and lifestyle.</p><br/>
-                                    <p>Discover elegant apartments, penthouses, and hotels including Vida Creek Harbour, Address Harbour Point, and Palace Residences — all offering world-class amenities, retail, and leisure experiences in one vibrant waterfront destination.</p><br/>
+                                    <p>Dubai Hills Estate unfolds as a serene retreat — a blissful sanctuary to unwind, recharge, and reconnect with nature. Surrounded by rolling greens and panoramic vistas, it’s a community where wellness flows, movement thrives, and meaningful connections flourish. Spanning over 11 million square meters, Dubai Hills Estate masterfully blends contemporary living with lush landscapes. Known as “The Green Heart of Dubai”, it strikes the perfect balance — just moments from the city, yet worlds away in spirit.</p>
                                 </div>
 
                                 {/* <div className="about-one__content-progress">

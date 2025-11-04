@@ -14,7 +14,7 @@ export default function Projects() {
             </div> */}
             <div className="container">
                 <div className="sec-title">
-                    <h2>Why Choose Emaar?</h2>
+                    <h2>Why Emaar?</h2>
                 </div>
                 <div className="text-box project_content">
                                     <p>Emaar Properties stands as a global leader in real estate, renowned for creating integrated communities and shaping the future of modern living. Owning an Emaar property means more than just investing — it’s about trusting a reputable name, enjoying a premium lifestyle, and being part of a thriving community in a city that turns aspirations into reality.</p>

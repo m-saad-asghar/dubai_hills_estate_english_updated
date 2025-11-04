@@ -23,7 +23,7 @@ export default function Home() {
                 <Banner />
                 {/* <Features /> */}
                 <About />
-                <Future/>
+                {/* <Future/> */}
                 <Services />
                 <Projects />
                 <ChooseEmaar/>

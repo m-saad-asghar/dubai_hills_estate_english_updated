@@ -32,7 +32,9 @@ export default function Banner() {
     <section className="main-slider main-slider-one" id="home">
       <Swiper {...swiperOptions} className="banner-carousel owl-theme owl-carousel owl-nav-none owl-dots-none">                    
         <SwiperSlide className="swiper-slide" style={{height: "100vh"}}>
-          <div className="image-layer" style={{backgroundImage: 'url(assets/img/slider/emaar_img_2.jpg)'}}>
+          <div className="image-layer" 
+          style={{ backgroundImage: 'url(https://cdn.properties.emaar.com/wp-content/uploads/2020/04/DHE_COMMUNITY_HERO-resize-1620x832.jpeg)' }}
+          >
             </div>
             {/* <div className="shape1"><img src="url(assets/img/slider/emaar_img_2.jpg)" alt=""/></div> */}
             <div className="container main_wrapper">
@@ -42,7 +44,7 @@ export default function Banner() {
          <div>
              <p className='small_heading' style={{lineHeight: "1.2"}}>DUBAI HILLS ESTATE</p>
           <h3 style={{lineHeight: "1.2"}} className='main_heading_margin'>
-  Luxury Homes Starting from <span className="line-break">GBP 324K.*</span>
+  OWN A LUXURY HOME FROM JUST <span className="line-break">GBP 332K.*</span>
 </h3>
          </div>
 
@@ -50,7 +52,7 @@ export default function Banner() {
 IN DUBAI’S MOST SOUGH-AFTER LOCATIONS.</p>
   <div className='resp_usd'>
         <p className="down_styling" style={{lineHeight: "1.5"}}>
-  *USD 436,000 / EUR 375,000
+  *USD 436,000 / EUR 379,000
    {/* / <span className="line-break-other">GBP 399,000</span> */}
 </p>
 

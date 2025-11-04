@@ -16,7 +16,7 @@ export default function Team() {
                     <h2>Dubai Map</h2>
                 </div>
                 <div className="text-box project_content">
-                                 <img src="assets/img/dubai_creek_harbour_map.jpg" alt="" className="map_styling"/>
+                                 <img src="assets/img/dubai_hills_map.jpg" alt="" className="map_styling"/>
                                 </div>
             </div>
         </section>

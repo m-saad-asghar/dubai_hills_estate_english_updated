@@ -223,7 +223,7 @@ export default function Contact() {
                             <div className="container">
                                 <div className="contact-two__inner">
                                     <div className="title-box">
-                                        <h2 style={{ color: "#ffffff" }}>Let’s Get in Touch</h2>
+                                        <h2 style={{ color: "#ffffff" }}>Request a Call From Our Property Advisor</h2>
                                         <p style={{ color: "#ffffff" }}>Required fields are marked *</p>
                                     </div>
                                     <div className="contact-two__inner-box">
@@ -323,17 +323,11 @@ export default function Contact() {
                                                             required
                                                         >
                                                             <option value="">Select Bedrooms</option>
-                                                            <option value="Studio">Studio</option>
                                                             <option value="1 Bedroom">1 Bedroom</option>
                                                             <option value="2 Bedrooms">2 Bedrooms</option>
                                                             <option value="3 Bedrooms">3 Bedrooms</option>
-                                                            <option value="4 Bedrooms">4 Bedrooms</option>
-                                                            <option value="5 Bedrooms">5 Bedrooms</option>
-                                                            <option value="6 Bedrooms">6 Bedrooms</option>
-                                                            <option value="7 Bedrooms">7 Bedrooms</option>
-                                                            <option value="7+ Bedrooms">7+ Bedrooms</option>
                                                             <option value="Townhouse">Townhouse</option>
-                                                            <option value="Penthouse">Penthouse</option>
+                                                            <option value="Villa">Villa</option>
                                                         </select>
                                                     </div>
                                                 </div>

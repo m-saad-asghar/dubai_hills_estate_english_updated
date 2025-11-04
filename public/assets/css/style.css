@@ -205,6 +205,11 @@ h2 {
     font-size: 2rem;
 }
 
+.spacing_ending {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
 .logo_align {
     display: flex !important;
     justify-content: space-between !important;
@@ -212,7 +217,7 @@ h2 {
 }
 
 .emaar_logo {
-    height: 60px !important;
+    height: 70px !important;
     width: auto !important;
 }
 
