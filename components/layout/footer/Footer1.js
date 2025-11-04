@@ -12,7 +12,7 @@ export default function Footer1() {
                             <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 wow fadeInUp centerize" data-wow-delay=".1s">
                                 <div className="single-footer-widget footer-widget__about">
                                     <div className="logo-box centerize">
-                                        <Link href="/" passHref>
+                                        <Link href="https://www.shiroestate.ae/" target="_blank" passHref>
   <Image
     src="/assets/img/shiro_images/logo.png"
     alt="shiro_logo"
