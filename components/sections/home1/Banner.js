@@ -52,7 +52,7 @@ export default function Banner() {
 IN DUBAI’S MOST SOUGH-AFTER LOCATIONS.</p>
   <div className='resp_usd'>
         <p className="down_styling" style={{lineHeight: "1.5"}}>
-  *USD 436,000 / EUR 379,000
+  *USD 436K / EUR 379K
    {/* / <span className="line-break-other">GBP 399,000</span> */}
 </p>
 
