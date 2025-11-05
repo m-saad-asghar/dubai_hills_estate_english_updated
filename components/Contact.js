@@ -223,7 +223,7 @@ export default function Contact() {
                             <div className="container">
                                 <div className="contact-two__inner">
                                     <div className="title-box">
-                                        <h2 style={{ color: "#ffffff" }}>Request a Call From Our Property Advisor</h2>
+                                        <h2 style={{ color: "#ffffff" }} className='contact_heading_styling'>Request a Call From Our Property Advisor</h2>
                                         <p style={{ color: "#ffffff" }}>Required fields are marked *</p>
                                     </div>
                                     <div className="contact-two__inner-box">

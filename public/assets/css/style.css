@@ -6597,9 +6597,9 @@ Project Four Css
 		font-size: 32px;
 		line-height: 42px;
 	}
-    .about-one {
+     .about-one {
         padding-top: 60px;
-        padding-bottom: 10px;
+        padding-bottom: 70px;
      }
 
     .submit_btn {
@@ -6621,6 +6621,11 @@ Project Four Css
 
     .why-one {
         padding: 60px 0 40px;
+    }
+
+    .contact_heading_styling {
+    line-height: 1.2 !important;
+    margin-bottom: 25px;
     }
 
     .service-one {
