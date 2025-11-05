@@ -44,7 +44,7 @@ export default function Banner() {
          <div>
              <p className='small_heading' style={{lineHeight: "1.2"}}>DUBAI HILLS ESTATE</p>
           <h3 style={{lineHeight: "1.2"}} className='main_heading_margin'>
-  OWN A LUXURY HOME FROM JUST <span className="line-break">GBP 332K.*</span>
+  Own a Luxury Home Starting at <span className="line-break">GBP 332K.*</span>
 </h3>
          </div>
 

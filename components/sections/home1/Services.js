@@ -29,8 +29,8 @@ export default function Pricing() {
                                     </span>
                                 </div>
                                 <div className="content-box">
-                                    <h2 style={{color: "#ffffff"}}>High Rental Profits</h2>
-                                    <p>Yields of 5–9% annually.</p>
+                                    <h2 style={{color: "#ffffff"}}>High Rental Returns</h2>
+                                    <p>Annual Yields of 5–9%.</p>
                                     
                                 </div>
                             </div>
@@ -73,8 +73,8 @@ export default function Pricing() {
                                     {/* <span className="icon-check-list"></span> */}
                                 </div>
                                 <div className="content-box">
-                                    <h2 style={{color: "#ffffff"}}>Tax-Free Ownership</h2>
-                                    <p>No property taxes ever.</p>
+                                    <h2 style={{color: "#ffffff"}}>100% Tax-Free Ownership</h2>
+                                    <p>Property with no taxes, ever.</p>
                                     
                                 </div>
                             </div>
@@ -228,7 +228,7 @@ export default function Pricing() {
                                 </div>
                                 <div className="content-box">
                                     <h2 style={{color: "#ffffff"}}>Exclusive Emaar Rewards</h2>
-                                    <p>Platinum & Gold perks for high-value investors.</p>
+                                    <p>Platinum & Gold perks for premium investors.</p>
                                     
                                 </div>
                             </div>

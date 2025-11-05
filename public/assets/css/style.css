@@ -164,6 +164,11 @@ textarea:focus {
     outline: 0
 }
 
+.qr_code_centerize {
+    display: flex;
+    align-items: center;
+}
+
 .uppercase {
     text-transform: uppercase;
 }
@@ -6633,8 +6638,8 @@ Project Four Css
         margin-top: 20px;
     }
     .centerize {
-        display: flex;
-        justify-content: center;
+        display: flex !important;
+        justify-content: center !important;
     }
 
 	.about-one__content-bottom-author-box {

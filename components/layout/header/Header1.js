@@ -18,25 +18,25 @@ export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSide
                                 <nav className="menu-nav" style={{width: "100%"}}>
                                     <div className="main-header-one__inner" style={{width: "100%"}}>
                                         <div className="main-header-one__left" style={{width: "100%"}}>
-                                            <div className="logo-box logo_align">
-                                               <Link href="/" passHref>
+                                            <div className="logo-box logo_align">                     
   <Image
     src="/assets/icon/emaar_logo.png"
     alt="emaar_logo"
     height={70}
     width={300}
     className="emaar_logo"
+    style={{cursor: "pointer"}}
   />
-</Link>
- <Link href="https://www.shiroestate.ae/" target="_blank" passHref>
+ 
   <Image
     src="/assets/img/shiro_images/logo.png"
     alt="shiro_logo"
     height={40}
     width={300}
     className="shiro_logo"
+    style={{cursor: "pointer"}}
   />
-</Link>
+
                                             </div>
                                         </div>
 
