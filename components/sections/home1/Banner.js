@@ -56,6 +56,13 @@ IN DUBAI’S MOST SOUGH-AFTER LOCATIONS.</p>
    {/* / <span className="line-break-other">GBP 399,000</span> */}
 </p>
 
+<p className="down_styling" style={{lineHeight: "1.5"}}>
+  *Subject to Availability
+</p>
+ <p className="down_styling" style={{lineHeight: "1.5"}}>
+  *The Global Prices may vary as per the Exchange Rate
+</p>
+
       </div>
         </div>
                         {/* <h3>Creative</h3> */}
