@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { LANDING_PAGE, ORIGIN, COUNTRY, NAME, PHONE_TEXT, EMAIL, COUNTRY_OF_RESIDENCE, BEDROOMS, DURATION, PURPOSE } = body;
+    const { LANDING_PAGE, ORIGIN, COUNTRY, NAME, PHONE_TEXT, EMAIL, BEDROOMS, DURATION, PURPOSE } = body;
 
     // Build email content (HTML and plain text)
     const subject = `New Lead from ${LANDING_PAGE}`;
@@ -16,7 +16,6 @@ Phone: ${PHONE_TEXT || "-"}
 Email: ${EMAIL || "-"}
 Origin: ${ORIGIN || "-"}
 Country: ${COUNTRY || "-"}
-Country of Residence: ${COUNTRY_OF_RESIDENCE || "-"}
 bedrooms: ${BEDROOMS || "-"}
 Duration: ${DURATION || "-"}
 Purpose: ${PURPOSE || "-"}
@@ -32,8 +31,6 @@ Purpose: ${PURPOSE || "-"}
         <tr><td><strong>Email:</strong></td><td>${EMAIL || "-"}</td></tr>
          <tr><td><strong>Origin:</strong></td><td>${ORIGIN || "-"}</td></tr>
           <tr><td><strong>Country:</strong></td><td>${COUNTRY || "-"}</td></tr>
-
-          <tr><td><strong>Country of Residence:</strong></td><td>${COUNTRY_OF_RESIDENCE || "-"}</td></tr>
           <tr><td><strong>Bedrooms:</strong></td><td>${BEDROOMS || "-"}</td></tr>
           <tr><td><strong>Duration:</strong></td><td>${DURATION || "-"}</td></tr>
           <tr><td><strong>Purpose:</strong></td><td>${PURPOSE || "-"}</td></tr>

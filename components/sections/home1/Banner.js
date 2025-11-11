@@ -6,6 +6,7 @@ import React from 'react';
 import Link from "next/link"
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
+import ContactForm from '@/components/ContactForm';
 
 const swiperOptions = {
     modules: [Autoplay, Pagination, Navigation],
@@ -31,14 +32,14 @@ export default function Banner() {
     
     <section className="main-slider main-slider-one" id="home">
       <Swiper {...swiperOptions} className="banner-carousel owl-theme owl-carousel owl-nav-none owl-dots-none">                    
-        <SwiperSlide className="swiper-slide" style={{height: "100vh"}}>
+        <SwiperSlide className="swiper-slide image_container">
           <div className="image-layer" 
           style={{ backgroundImage: 'url(https://cdn.properties.emaar.com/wp-content/uploads/2020/04/DHE_COMMUNITY_HERO-resize-1620x832.jpeg)' }}
           >
             </div>
-            {/* <div className="shape1"><img src="url(assets/img/slider/emaar_img_2.jpg)" alt=""/></div> */}
-            <div className="container main_wrapper">
-                <div className="main-slider-one__single">
+            <div className="custom_container main_wrapper row">
+                <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12'>
+<div className="main-slider-one__single">
                     <div className="main-slider-one__content">
                         <div className='banner_text_container'>
          <div>
@@ -53,7 +54,6 @@ IN DUBAI’S MOST SOUGH-AFTER LOCATIONS.</p>
   <div className='resp_usd'>
         <p className="down_styling" style={{lineHeight: "1.5"}}>
   *USD 442K / EUR 384K
-   {/* / <span className="line-break-other">GBP 399,000</span> */}
 </p>
 
 <p className="down_styling" style={{lineHeight: "1.5"}}>
@@ -65,27 +65,32 @@ IN DUBAI’S MOST SOUGH-AFTER LOCATIONS.</p>
 
       </div>
         </div>
-                        {/* <h3>Creative</h3> */}
-                        {/* <h2>Architecture</h2> */}
                         <div className="btn-box">
-                            <div className="btn-one">
+                            <div className="btn-one btn-one-form">
                                 <Link className="thm-btn" href="#contact-form">
                                     <span className="txt">REGISTER INTEREST</span>
                                 </Link>
                             </div>
                         </div>
-                        {/* <div className="contact-info">
-                        </div> */}
                     </div>
 
                    
+                </div>
+                </div>
+                <div className='col-xl-6 col-lg-6 col-md-6 col-sm-12'>
+<div className="main-slider-one__single_form">
+                    <div className="main-slider-one__content">
+                        <ContactForm/>
+                    </div>
+
+                   
+                </div>
                 </div>
             </div>
         </SwiperSlide>
         <div className="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets" id="main-slider-one__pagination"><span className="swiper-pagination-bullet swiper-pagination-bullet-active"  role="button" aria-label="Go to slide 1"></span><span className="swiper-pagination-bullet" role="button" aria-label="Go to slide 2"></span><span className="swiper-pagination-bullet" role="button" aria-label="Go to slide 3"></span></div>
       </Swiper>
     </section>
-    {/* <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId="vfhzo499OeA" onClose={() => setOpen(false)} /> */}
     </>
   );
 };

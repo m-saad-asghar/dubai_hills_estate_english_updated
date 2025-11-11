@@ -6,10 +6,10 @@ import Image from "next/image";
 export default function Header1({ scroll, isMobileMenu, handleMobileMenu, isSidebar, handlePopup, handleSidebar }) {
     return (
         <>
-            <header className={`main-header main-header-one container ${scroll ? "" : ""}`}>
+            <header className={`main-header main-header-one custom_container ${scroll ? "" : ""}`}>
                 <div className={`menu-area ${scroll ? "sticky-menu" : ""}`}>
                     {/* header-lower */}
-                    <div style={{paddingLeft: 0, paddingRight: 0}} className={`menu-area ${scroll ? "spacing_ending" : ""} container`}>
+                    <div style={{paddingLeft: 0, paddingRight: 0}} className={`menu-area ${scroll ? "spacing_ending" : ""} custom_container`}>
                         <div className="menu-area__inner">
                             <div className="mobile-nav-toggler" onClick={handleMobileMenu}>
                                 {/* <i className="fas fa-bars"></i> */}

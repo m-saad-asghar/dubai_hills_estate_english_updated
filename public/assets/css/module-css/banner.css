@@ -72,6 +72,13 @@
     z-index: 1;
 }
 
+.main-slider-one__single_form {
+    position: relative;
+    display: block;
+    /* padding: 388px 0px 53px; */
+    z-index: 1;
+}
+
 .main-slider-one__content {
     position: relative;
     display: block;
