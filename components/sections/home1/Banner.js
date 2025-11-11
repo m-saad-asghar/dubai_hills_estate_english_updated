@@ -65,13 +65,13 @@ IN DUBAI’S MOST SOUGH-AFTER LOCATIONS.</p>
 
       </div>
         </div>
-                        <div className="btn-box">
+                        {/* <div className="btn-box">
                             <div className="btn-one btn-one-form">
                                 <Link className="thm-btn" href="#contact-form">
                                     <span className="txt">REGISTER INTEREST</span>
                                 </Link>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                    
