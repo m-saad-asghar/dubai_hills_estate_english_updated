@@ -175,7 +175,7 @@ export default function Contact() {
   }
 }
 
-const token = document.querySelector('textarea[name="g-recaptcha-response"]').value;
+const token = window.grecaptcha.getResponse(window.recaptchaWidgetId2);
 
   if (!token) {
     setCaptchaError('Please complete the reCAPTCHA');
