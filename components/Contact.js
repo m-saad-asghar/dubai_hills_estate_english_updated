@@ -239,7 +239,6 @@ const token = document.querySelector('textarea[name="g-recaptcha-response"]').va
                                         {/* 🎯 FIX 1: Add onSubmit handler */}
                                         <form 
                                             onSubmit={handleSubmit}
-                                            key={Date.now()}
                                             className="contact-page__form contact-form-validated"
                                         >
                                             <div className="row">
