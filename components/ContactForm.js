@@ -215,30 +215,27 @@ export default function ContactForm() {
                             <label className="form_label">
                               Phone Number* (With Country Code)
                             </label>
-                            <PhoneInput
-                              name="phone"
-                              country={'gb'}
-                              value={formData.phone}
-                              onChange={handlePhoneChange}
-                              countryCodeEditable={false}
-                              required
-                              inputStyle={{
-                                width: '100%',
-                                borderRadius: '0',
-                                border: phoneError ? '1px solid red' : '1px solid #000',
-                                height: '60px',
-                              }}
-                            />
-                            <p
-                              className="error_msg"
-                              style={{
-                                color: 'red',
-                                fontSize: '14px',
-                                marginTop: '5px',
-                              }}
-                            >
-                              {phoneError}
-                            </p>
+                             <PhoneInput
+                                                            name="phone"
+                                                            country={"gb"}
+                                                            value={formData.phone}
+  onChange={(value) =>
+    setFormData({
+      ...formData,
+      phone: value,
+    })
+  }
+                                                            countryCodeEditable={false}
+                                                            required
+                                                            inputStyle={{
+                                                                width: "100%",
+                                                                borderRadius: "0",
+                                                                border: phoneError ? "1px solid red" : "1px solid #000", // Visual error feedback
+                                                                height: "60px",
+                                                            }}
+                                                        />
+                                                        <p className='error_msg' style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{phoneError}</p>
+                                                    </div>
                           </div>
                         </div>
                         <div
