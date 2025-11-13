@@ -35,11 +35,6 @@ export default function Contact() {
   useEffect(() => {
   if (window.grecaptcha) {
     // Render only if not rendered yet
-    if (!window.recaptchaWidgetId1) {
-      window.recaptchaWidgetId1 = window.grecaptcha.render('recaptcha-contact1', {
-        sitekey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-      });
-    }
 
     if (!window.recaptchaWidgetId2) {
       window.recaptchaWidgetId2 = window.grecaptcha.render('recaptcha-contact2', {
@@ -214,6 +209,7 @@ const token = document.querySelector('textarea[name="g-recaptcha-response"]').va
         duration: '',
         purpose: '',
       });
+        window.grecaptcha.reset(window.recaptchaWidgetId2);
       await sendLeadEmail();
     } else {
       setDisableBtn(false);
