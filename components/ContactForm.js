@@ -66,19 +66,6 @@ export default function ContactForm() {
     });
   };
 
-  const handlePhoneChange = (value) => {
-    setFormData({
-      ...formData,
-      phone: value,
-    });
-
-    if (value.length > 0 && !isPossiblePhoneNumber('+' + value)) {
-      setPhoneError('Please enter a valid phone number (including country code).');
-    } else {
-      setPhoneError('');
-    }
-  };
-
   const handleCaptchaChange = (token) => {
     setCaptchaToken(token);
     if (token) {
@@ -86,80 +73,148 @@ export default function ContactForm() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+   const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    // 1) Check reCAPTCHA
-    if (!captchaToken) {
-      setCaptchaError('Please verify that you are not a robot.');
-      return;
-    }
-
-    // 2) Basic phone validation
-    if (!formData.phone) {
-      setPhoneError('Phone number is required');
-      return;
-    } else if (formData.phone.length < 9 || formData.phone.length > 15) {
-      setPhoneError('Phone number must be between 9 and 15 characters');
-      return;
-    } else {
-      setPhoneError('');
-    }
-
-    // Strip leading 0 after country code if present
-    let phone = formData.phone.replace(/^(\d{1,3})0/, '$1');
-
-    const body = {
-      formData: {
-        ...formData,
-        phone,
-      },
-      originValue,
-      countryValue,
-      captchaToken,
-    };
-
-    try {
-      setDisableBtn(true);
-      setSubmitMessage(null);
-
-      const res = await fetch('/api/submit-lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-
-      const result = await res.json();
-      setDisableBtn(false);
-
-      if (res.ok && result.success) {
-        // Reset form
-        setFormData({
-          name: '',
-          phone: '',
-          email: '',
-          bedrooms: '',
-          duration: '',
-          purpose: '',
-        });
-
-        // Reset captcha
-        setCaptchaToken(null);
-        if (recaptchaRef.current) {
-          recaptchaRef.current.reset();
+        // ✅ Check captcha FIRST
+        if (!captchaToken) {
+            setCaptchaError("Please verify that you are not a robot.");
+            return;
         }
 
-        setSubmitMessage('Thank you! Your details have been submitted.');
-        router.push('/thank-you');
-      } else {
-        setSubmitMessage(result.message || 'Something went wrong. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error submitting lead:', error);
-      setDisableBtn(false);
-      setSubmitMessage('Something went wrong. Please try again.');
-    }
-  };
+        if (!formData.phone) {
+            setPhoneError("Phone number is required");
+            return;
+        } else if (formData.phone.length < 9 || formData.phone.length > 15) {
+            setPhoneError("Phone number must be between 9 and 15 characters");
+            return;
+        } else {
+            setPhoneError("");
+        }
+
+        let phone = formData.phone.replace(/^(\d{1,3})0/, '$1');
+        formData.phone = phone
+
+        const payload_email = {
+            LANDING_PAGE: "Dubai Hills Estate EN Landing Page",
+            ORIGIN: originValue,
+            COUNTRY: countryValue,
+            NAME: formData.name,
+            PHONE_TEXT: formData.phone,
+            EMAIL: formData.email,
+            // COUNTRY_OF_RESIDENCE: formData.country_of_residence,
+            BEDROOMS: formData.bedrooms,
+            DURATION: formData.duration,
+            PURPOSE: formData.purpose,
+            // RECAPTCHA_TOKEN: captchaToken, // (optional if you later validate server-side)
+        };
+
+        const payload = {
+            fields: {
+                TITLE: `Dubai Hills Estate EN Landing Page`,
+                UF_CRM_1760777561731: originValue,
+                NAME: formData.name,
+                PHONE_TEXT: formData.phone,
+                PHONE: [
+                    {
+                        VALUE: formData.phone,
+                        VALUE_TYPE: "WORK",
+                    },
+                ],
+                EMAIL: [
+                    {
+                        VALUE: formData.email,
+                        VALUE_TYPE: "WORK",
+                    },
+                ],
+                SOURCE_DESCRIPTION: formData.message,
+                SOURCE_ID: "WEB",
+                ASSIGNED_BY_ID: 25,
+                UF_CRM_1754652292782: "Dubai Hills Estate EN Landing Page",
+                UF_CRM_1761206533: countryValue,
+                // UF_CRM_1761918592: formData.country_of_residence,
+                UF_CRM_1761918627: formData.bedrooms,
+                UF_CRM_1761918741: formData.duration,
+                UF_CRM_1761918805: formData.purpose,
+            },
+            params: {
+                REGISTER_SONET_EVENT: "Y",
+            },
+        };
+
+        async function sendLeadEmail() {
+            try {
+                const res = await fetch("/api/send-email", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload_email),
+                });
+
+                const data = await res.json();
+                console.log("Email sent:", data);
+            } catch (err) {
+                console.error("Error sending email:", err);
+            }
+        }
+
+        try {
+            setDisableBtn(true);
+            setSubmitMessage(null);
+
+            const response = await fetch(
+                "https://crm.shiroestate.ae/rest/25/btnspp9oeepo8jt6/crm.lead.add.json",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            const result = await response.json();
+            setDisableBtn(false);
+
+            if (result.result) {
+                // Reset form
+                setFormData({
+                    name: '',
+                    phone: '',
+                    email: '',
+                    // country_of_residence: '',
+                    bedrooms: '',
+                    duration: '',
+                    purpose: '',
+                });
+
+                // Reset this form's captcha only
+                setCaptchaToken(null);
+                if (recaptchaRef.current) {
+                    recaptchaRef.current.reset();
+                }
+
+                await sendLeadEmail();
+                router.push('/thank-you');
+            } else {
+                setDisableBtn(false);
+                toast.error(
+                    "Something Went Wrong. Please Try Again.",
+                    {
+                        duration: 5000,
+                    }
+                );
+            }
+        } catch (error) {
+            setDisableBtn(false);
+            console.error("Error submitting lead:", error);
+            toast.error(
+                "Something Went Wrong. Please Try Again.",
+                {
+                    duration: 5000,
+                }
+            );
+        }
+    };
 
   return (
     <>
