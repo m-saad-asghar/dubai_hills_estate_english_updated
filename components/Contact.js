@@ -66,7 +66,6 @@ export default function Contact() {
             [e.target.name]: e.target.value,
         });
     };
-    
 
     
 
