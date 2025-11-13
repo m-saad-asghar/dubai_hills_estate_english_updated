@@ -375,7 +375,7 @@ const token = document.querySelector('textarea[name="g-recaptcha-response"]').va
                                             </div>
                                             <div className="row">
                                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                                    <div className='captcha_container' key={Date.now()}>
+                                                    <div className='captcha_container'>
                                                       <div className="g-recaptcha" data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}></div>
                                                     </div>
                                                      <p className='error_msg' style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{captchaError}</p>
