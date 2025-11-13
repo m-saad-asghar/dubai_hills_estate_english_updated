@@ -170,6 +170,18 @@ const token = document.querySelector('textarea[name="g-recaptcha-response"]').va
     return;
   }
 
+  const res = await fetch("/api/verify-recaptcha", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ token, formData }),
+  });
+
+  const data = await res.json();
+  if (!data.success) {
+    alert("reCAPTCHA verification failed");
+    return;
+  }
+
   try {
     setDisableBtn(true);
     const response = await fetch(
