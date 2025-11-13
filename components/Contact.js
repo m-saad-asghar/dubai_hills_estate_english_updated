@@ -1,9 +1,10 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PhoneInput, { isPossiblePhoneNumber } from "react-phone-input-2";
 import 'react-phone-input-2/lib/style.css';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
+import ReCAPTCHA from "react-google-recaptcha";
 
 // Note: Layout and Link imports are commented out as they were not provided, 
 // but you should uncomment them if you use them in your actual Next.js project structure.
@@ -23,39 +24,44 @@ export default function Contact() {
     });
     const [phoneError, setPhoneError] = useState('');
     const [submitMessage, setSubmitMessage] = useState(null); // State for success/error message
-     const [isOpen, setOpen] = useState(false)
+    const [isOpen, setOpen] = useState(false)
     const [keepUpdated, setKeepUpdated] = useState(true);
-     const [disableBtn, setDisableBtn] = useState(false);
-     const searchParams = useSearchParams();
-     const [countryValue, setCountryValue] = useState('');
-  const [originValue, setOriginValue] = useState('');
+    const [disableBtn, setDisableBtn] = useState(false);
+    const searchParams = useSearchParams();
+    const [countryValue, setCountryValue] = useState('');
+    const [originValue, setOriginValue] = useState('');
 
-  useEffect(() => {
-    const origin = searchParams.get('origin');
-    const country = searchParams.get('country');
+    // 🔐 reCAPTCHA for THIS component only
+    const recaptchaRef = useRef(null);
+    const [captchaToken, setCaptchaToken] = useState(null);
+    const [captchaError, setCaptchaError] = useState('');
 
-    if (origin) {
-      if (origin.toLowerCase() === 'meta') {
-        setOriginValue('Meta');
-      } else if (origin.toLowerCase() === 'google') {
-        setOriginValue('Google Ads');
-      } else {
-        setOriginValue('');
-      }
-    } else {
-      setOriginValue('');
-    }
+    useEffect(() => {
+        const origin = searchParams.get('origin');
+        const country = searchParams.get('country');
 
-    if (country) {
-  const formattedCountry = country
-    .replace(/_/g, ' ')
-    .toLowerCase()
-    .replace(/\b\w/g, (char) => char.toUpperCase());
-  setCountryValue(formattedCountry);
-} else {
-      setCountryValue('');
-    }
-  }, [searchParams]);
+        if (origin) {
+            if (origin.toLowerCase() === 'meta') {
+                setOriginValue('Meta');
+            } else if (origin.toLowerCase() === 'google') {
+                setOriginValue('Google Ads');
+            } else {
+                setOriginValue('');
+            }
+        } else {
+            setOriginValue('');
+        }
+
+        if (country) {
+            const formattedCountry = country
+                .replace(/_/g, ' ')
+                .toLowerCase()
+                .replace(/\b\w/g, (char) => char.toUpperCase());
+            setCountryValue(formattedCountry);
+        } else {
+            setCountryValue('');
+        }
+    }, [searchParams]);
 
     const handleChange = (e) => {
         // This handles changes for all standard inputs (name, email, country, select fields)
@@ -64,8 +70,6 @@ export default function Contact() {
             [e.target.name]: e.target.value,
         });
     };
-
-    
 
     // New handler for the PhoneInput component
     const handlePhoneChange = (value, data, event, formattedValue) => {
@@ -76,139 +80,162 @@ export default function Contact() {
         
         // Basic Phone Validation (using the utility provided by the package is better)
         if (value.length > 0 && !isPossiblePhoneNumber('+' + value)) {
-             setPhoneError('Please enter a valid phone number (including country code).');
+            setPhoneError('Please enter a valid phone number (including country code).');
         } else {
-             setPhoneError('');
+            setPhoneError('');
         }
     };
 
-     const handleSubmit = async (e) => {
-  e.preventDefault();
+    // ✅ reCAPTCHA handler for THIS form
+    const handleCaptchaChange = (token) => {
+        setCaptchaToken(token);
+        if (token) {
+            setCaptchaError('');
+        }
+    };
 
-   if (!formData.phone) {
-    setPhoneError("Phone number is required");
-    return;
-} else if (formData.phone.length < 9 || formData.phone.length > 15) {
-  setPhoneError("Phone number must be between 9 and 15 characters");
-  return;
-}else{
-  setPhoneError("");
-}
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
- let phone = formData.phone.replace(/^(\d{1,3})0/, '$1');
- formData.phone = phone
+        // ✅ Check captcha FIRST
+        if (!captchaToken) {
+            setCaptchaError("Please verify that you are not a robot.");
+            return;
+        }
 
-  const payload_email = {
-    LANDING_PAGE: "Dubai Hills Estate EN Landing Page",
-    ORIGIN: originValue,
-    COUNTRY: countryValue,
-    NAME: formData.name,
-    PHONE_TEXT: formData.phone,
-    EMAIL: formData.email,
-    // COUNTRY_OF_RESIDENCE: formData.country_of_residence,
-    BEDROOMS: formData.bedrooms,
-    DURATION: formData.duration,
-    PURPOSE: formData.purpose,
-  };
+        if (!formData.phone) {
+            setPhoneError("Phone number is required");
+            return;
+        } else if (formData.phone.length < 9 || formData.phone.length > 15) {
+            setPhoneError("Phone number must be between 9 and 15 characters");
+            return;
+        } else {
+            setPhoneError("");
+        }
 
-  const payload = {
-    fields: {
-      TITLE: `Dubai Hills Estate EN Landing Page`,
-      UF_CRM_1760777561731: originValue,
-      NAME: formData.name,
-      PHONE_TEXT: formData.phone,
-      PHONE: [
-        {
-          VALUE: formData.phone,
-          VALUE_TYPE: "WORK",
-        },
-      ],
-      EMAIL: [
-        {
-          VALUE: formData.email,
-          VALUE_TYPE: "WORK",
-        },
-      ],
-      SOURCE_DESCRIPTION: formData.message,
-      SOURCE_ID: "WEB",
-      ASSIGNED_BY_ID: 25,
-      UF_CRM_1754652292782: "Dubai Hills Estate EN Landing Page",
-      UF_CRM_1761206533: countryValue,
-    // UF_CRM_1761918592: formData.country_of_residence,
-    UF_CRM_1761918627: formData.bedrooms,
-    UF_CRM_1761918741: formData.duration,
-    UF_CRM_1761918805: formData.purpose,
-    },
-    params: {
-      REGISTER_SONET_EVENT: "Y",
-    },
-  };
+        let phone = formData.phone.replace(/^(\d{1,3})0/, '$1');
+        formData.phone = phone
 
-  
+        const payload_email = {
+            LANDING_PAGE: "Dubai Hills Estate EN Landing Page",
+            ORIGIN: originValue,
+            COUNTRY: countryValue,
+            NAME: formData.name,
+            PHONE_TEXT: formData.phone,
+            EMAIL: formData.email,
+            // COUNTRY_OF_RESIDENCE: formData.country_of_residence,
+            BEDROOMS: formData.bedrooms,
+            DURATION: formData.duration,
+            PURPOSE: formData.purpose,
+            // RECAPTCHA_TOKEN: captchaToken, // (optional if you later validate server-side)
+        };
 
-  async function sendLeadEmail() {
-  try {
-    const res = await fetch("/api/send-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload_email),
-    });
+        const payload = {
+            fields: {
+                TITLE: `Dubai Hills Estate EN Landing Page`,
+                UF_CRM_1760777561731: originValue,
+                NAME: formData.name,
+                PHONE_TEXT: formData.phone,
+                PHONE: [
+                    {
+                        VALUE: formData.phone,
+                        VALUE_TYPE: "WORK",
+                    },
+                ],
+                EMAIL: [
+                    {
+                        VALUE: formData.email,
+                        VALUE_TYPE: "WORK",
+                    },
+                ],
+                SOURCE_DESCRIPTION: formData.message,
+                SOURCE_ID: "WEB",
+                ASSIGNED_BY_ID: 25,
+                UF_CRM_1754652292782: "Dubai Hills Estate EN Landing Page",
+                UF_CRM_1761206533: countryValue,
+                // UF_CRM_1761918592: formData.country_of_residence,
+                UF_CRM_1761918627: formData.bedrooms,
+                UF_CRM_1761918741: formData.duration,
+                UF_CRM_1761918805: formData.purpose,
+            },
+            params: {
+                REGISTER_SONET_EVENT: "Y",
+            },
+        };
 
-    const data = await res.json();
-    console.log("Email sent:", data);
-  } catch (err) {
-    console.error("Error sending email:", err);
-  }
-}
+        async function sendLeadEmail() {
+            try {
+                const res = await fetch("/api/send-email", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload_email),
+                });
 
-  try {
-    setDisableBtn(true);
-    const response = await fetch(
-      "https://crm.shiroestate.ae/rest/25/btnspp9oeepo8jt6/crm.lead.add.json",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      }
-    );
+                const data = await res.json();
+                console.log("Email sent:", data);
+            } catch (err) {
+                console.error("Error sending email:", err);
+            }
+        }
 
-    const result = await response.json();
-   setDisableBtn(false);
+        try {
+            setDisableBtn(true);
+            setSubmitMessage(null);
 
-    if (result.result) {
-      router.push('/thank-you');
-      setFormData({
-          name: '',
-        phone: '',
-        email: '',
-        // country_of_residence: '',
-        bedrooms: '',
-        duration: '',
-        purpose: '',
-      });
-      await sendLeadEmail();
-    } else {
-      setDisableBtn(false);
-      toast.error(
-  "Something Went Wrong. Please Try Again.",
-  {
-    duration: 5000,
-  }
-);
-    }
-  } catch (error) {
-    setDisableBtn(false);
-    console.error("Error submitting lead:", error);
-       toast.error(
-  "Something Went Wrong. Please Try Again.",
-  {
-    duration: 5000,
-  }
-);
-  }
-};
+            const response = await fetch(
+                "https://crm.shiroestate.ae/rest/25/btnspp9oeepo8jt6/crm.lead.add.json",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            const result = await response.json();
+            setDisableBtn(false);
+
+            if (result.result) {
+                // Reset form
+                setFormData({
+                    name: '',
+                    phone: '',
+                    email: '',
+                    // country_of_residence: '',
+                    bedrooms: '',
+                    duration: '',
+                    purpose: '',
+                });
+
+                // Reset this form's captcha only
+                setCaptchaToken(null);
+                if (recaptchaRef.current) {
+                    recaptchaRef.current.reset();
+                }
+
+                await sendLeadEmail();
+                router.push('/thank-you');
+            } else {
+                setDisableBtn(false);
+                toast.error(
+                    "Something Went Wrong. Please Try Again.",
+                    {
+                        duration: 5000,
+                    }
+                );
+            }
+        } catch (error) {
+            setDisableBtn(false);
+            console.error("Error submitting lead:", error);
+            toast.error(
+                "Something Went Wrong. Please Try Again.",
+                {
+                    duration: 5000,
+                }
+            );
+        }
+    };
 
 
     return (
@@ -227,7 +254,6 @@ export default function Contact() {
                                         <p style={{ color: "#ffffff" }}>Required fields are marked *</p>
                                     </div>
                                     <div className="contact-two__inner-box">
-                                        {/* 🎯 FIX 1: Add onSubmit handler */}
                                         <form 
                                             onSubmit={handleSubmit}
                                             className="contact-page__form contact-form-validated"
@@ -268,17 +294,16 @@ export default function Contact() {
                                                         <label className="form_label">
                                                             Phone Number* (With Country Code)
                                                         </label>
-                                                        {/* 🎯 FIX 2: Use the dedicated phone handler */}
                                                         <PhoneInput
                                                             name="phone"
                                                             country={"gb"}
                                                             value={formData.phone}
-  onChange={(value) =>
-    setFormData({
-      ...formData,
-      phone: value,
-    })
-  }
+                                                            onChange={(value) =>
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    phone: value,
+                                                                })
+                                                            }
                                                             countryCodeEditable={false}
                                                             required
                                                             inputStyle={{
@@ -323,7 +348,7 @@ export default function Contact() {
                                                             How Soon You are Looking to Buy*
                                                         </label>
                                                         <select
-                                                            name="duration" // FIX: Removed the extraneous closing comment tag
+                                                            name="duration"
                                                             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-5 focus:ring-blue-500"
                                                             value={formData.duration} 
                                                             onChange={handleChange}
@@ -364,8 +389,19 @@ export default function Contact() {
                                                 </div>
                                             </div>
                                             <div className="row">
-                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                                {/* ⬅️ This was the empty col — now holds THIS form's captcha */}
+                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 captcha_container">
                                                     <div>
+                                                        <ReCAPTCHA
+                                                            ref={recaptchaRef}
+                                                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                                                            onChange={handleCaptchaChange}
+                                                        />
+                                                        {captchaError && (
+                                                            <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>
+                                                                {captchaError}
+                                                            </p>
+                                                        )}
                                                     </div>
                                                 </div>
 
@@ -379,7 +415,7 @@ export default function Contact() {
                                                         </button>
                                                     </div>
                                                     {/* Success Message Display */}
-                                                    {submitMessage && (
+                                                    {/* {submitMessage && (
                                                         <div style={{ 
                                                             marginTop: '15px', 
                                                             padding: '10px', 
@@ -390,7 +426,7 @@ export default function Contact() {
                                                         }}>
                                                             {submitMessage}
                                                         </div>
-                                                    )}
+                                                    )} */}
                                                 </div>
                                             </div>
                                         </form>

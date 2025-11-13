@@ -350,7 +350,7 @@ export default function ContactForm() {
                             </button>
                           </div>
 
-                          {submitMessage && (
+                          {/* {submitMessage && (
                             <div
                               style={{
                                 marginTop: '15px',
@@ -365,7 +365,7 @@ export default function ContactForm() {
                             >
                               {submitMessage}
                             </div>
-                          )}
+                          )} */}
                         </div>
                       </div>
                     </form>
