@@ -215,7 +215,7 @@ export default function ContactForm() {
                             <label className="form_label">
                               Phone Number* (With Country Code)
                             </label>
-                             <PhoneInput
+                            <PhoneInput
                                                             name="phone"
                                                             country={"gb"}
                                                             value={formData.phone}
@@ -234,8 +234,7 @@ export default function ContactForm() {
                                                                 height: "60px",
                                                             }}
                                                         />
-                                                        <p className='error_msg' style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{phoneError}</p>
-                                                    </div>
+                            <p className='error_msg' style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{phoneError}</p>
                           </div>
                         </div>
                         <div
