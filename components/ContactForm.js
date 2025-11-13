@@ -163,12 +163,12 @@ export default function ContactForm() {
   }
 }
 
-// const token = document.querySelector('textarea[name="g-recaptcha-response"]').value;
+const token = document.querySelector('textarea[name="g-recaptcha-response"]').value;
 
-//   if (!token) {
-//     setCaptchaError('Please complete the reCAPTCHA');
-//     return;
-//   }
+  if (!token) {
+    setCaptchaError('Please complete the reCAPTCHA');
+    return;
+  }
 
   try {
     setDisableBtn(true);
@@ -373,9 +373,9 @@ export default function ContactForm() {
                                             </div>
                                             <div className="row">
                                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                                    {/* <div className='captcha_container'>
+                                                    <div className='captcha_container'>
                                                       <div className="g-recaptcha" data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}></div>
-                                                    </div> */}
+                                                    </div>
                                                      <p className='error_msg' style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{captchaError}</p>
                                                 </div>
 
@@ -414,10 +414,10 @@ export default function ContactForm() {
                 {/*End Contact Page */}
             </div>
             {/* You might close your </Layout> component here */}
-       {/* <Script
+       <Script
   src="https://www.google.com/recaptcha/api.js"
   strategy="afterInteractive"
-/> */}
+/>
         </>
     )
 }
