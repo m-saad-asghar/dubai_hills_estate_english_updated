@@ -67,6 +67,18 @@ export default function Contact() {
         });
     };
 
+
+    useEffect(() => {
+  if (window.grecaptcha) {
+    // Reset existing widget or render new one
+    const captcha = document.querySelector(".g-recaptcha");
+    if (captcha) {
+      window.grecaptcha.reset();
+    }
+  }
+}, []);
+
+
     
 
     // New handler for the PhoneInput component
