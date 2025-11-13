@@ -4,6 +4,7 @@ import PhoneInput, { isPossiblePhoneNumber } from "react-phone-input-2";
 import 'react-phone-input-2/lib/style.css';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
+import Script from "next/script";
 
 // Note: Layout and Link imports are commented out as they were not provided, 
 // but you should uncomment them if you use them in your actual Next.js project structure.
@@ -22,6 +23,7 @@ export default function Contact() {
         purpose: '',
     });
     const [phoneError, setPhoneError] = useState('');
+    const [captchaError, setCaptchaError] = useState('');
     const [submitMessage, setSubmitMessage] = useState(null); // State for success/error message
      const [isOpen, setOpen] = useState(false)
     const [keepUpdated, setKeepUpdated] = useState(true);
@@ -161,6 +163,13 @@ export default function Contact() {
   }
 }
 
+const token = document.querySelector('textarea[name="g-recaptcha-response"]').value;
+
+  if (!token) {
+    setCaptchaError('Please complete the reCAPTCHA');
+    return;
+  }
+
   try {
     setDisableBtn(true);
     const response = await fetch(
@@ -170,7 +179,7 @@ export default function Contact() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+       body: JSON.stringify({ ...payload, recaptchaToken: token }),
       }
     );
 
@@ -365,8 +374,10 @@ export default function Contact() {
                                             </div>
                                             <div className="row">
                                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                                    <div>
+                                                    <div className='captcha_container'>
+                                                      <div className="g-recaptcha" data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}></div>
                                                     </div>
+                                                     <p className='error_msg' style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{captchaError}</p>
                                                 </div>
 
                                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 btn_styling">
@@ -404,6 +415,11 @@ export default function Contact() {
                 {/*End Contact Page */}
             </div>
             {/* You might close your </Layout> component here */}
+
+<Script
+  src="https://www.google.com/recaptcha/api.js"
+  strategy="afterInteractive"
+/>
         </>
     )
 }

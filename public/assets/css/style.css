@@ -286,6 +286,10 @@ h6 {
     padding: 25px;
 }
 
+.captcha_container {
+    margin-top: 20px;
+}
+
 
 .contact-two {
     background-color: #9f8151;
@@ -6557,6 +6561,10 @@ Project Four Css
 
 /* Mobile Layout: 320px. */
 @media only screen and (max-width: 767px) {
+
+    .captcha_container {
+    margin-top: 30px;
+}
 
     .image_container {
     height: 100% !important;
