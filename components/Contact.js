@@ -13,7 +13,6 @@ import Script from "next/script";
 
 export default function Contact() {
     const router = useRouter();
-      const [widgetId, setWidgetId] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
@@ -32,27 +31,6 @@ export default function Contact() {
      const searchParams = useSearchParams();
      const [countryValue, setCountryValue] = useState('');
   const [originValue, setOriginValue] = useState('');
-
-  useEffect(() => {
-    if (!window.grecaptcha || widgetId !== null) return;
-
-    // Create container for invisible captcha
-    const container = document.createElement("div");
-    container.style.display = "none";
-    container.id = "invisible-recaptcha-container";
-    document.body.appendChild(container);
-
-    const id = window.grecaptcha.render(container.id, {
-      sitekey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
-      size: "invisible",
-      callback: (token) => {
-        console.log("Token:", token);
-        // call API to verify token
-      },
-    });
-
-    setWidgetId(id); // store widget ID
-  }, [widgetId]);
 
   useEffect(() => {
     const origin = searchParams.get('origin');
@@ -122,12 +100,6 @@ export default function Contact() {
 
  let phone = formData.phone.replace(/^(\d{1,3})0/, '$1');
  formData.phone = phone
-
-  if (widgetId !== null && window.grecaptcha) {
-      window.grecaptcha.execute(widgetId); // only call execute after widget is ready
-    } else {
-      console.error("reCAPTCHA widget not ready yet");
-    }
 
   const payload_email = {
     LANDING_PAGE: "Dubai Hills Estate EN Landing Page",
@@ -403,7 +375,7 @@ const token = document.querySelector('textarea[name="g-recaptcha-response"]').va
                                             </div>
                                             <div className="row">
                                                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                                    <div className='captcha_container'>
+                                                    <div className='captcha_container' key={Date.now()}>
                                                       <div className="g-recaptcha" data-sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}></div>
                                                     </div>
                                                      <p className='error_msg' style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{captchaError}</p>
