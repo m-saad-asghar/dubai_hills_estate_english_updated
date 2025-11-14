@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ReactCurvedText from 'react-curved-text'
 import ModalVideo from 'react-modal-video'
 import React from 'react';
@@ -7,6 +7,7 @@ import Link from "next/link"
 import { Autoplay, Navigation, Pagination } from "swiper/modules"
 import { Swiper, SwiperSlide } from "swiper/react"
 import ContactForm from '@/components/ContactForm';
+import { useSearchParams } from 'next/navigation';
 
 const swiperOptions = {
     modules: [Autoplay, Pagination, Navigation],
@@ -27,6 +28,35 @@ const swiperOptions = {
 
 export default function Banner() {
     const [isOpen, setOpen] = useState(false)
+     const [countryValue, setCountryValue] = useState('');
+        const [originValue, setOriginValue] = useState('');
+    const searchParams = useSearchParams();
+      useEffect(() => {
+            const origin = searchParams.get('origin');
+            const country = searchParams.get('country');
+    
+            if (origin) {
+                if (origin.toLowerCase() === 'meta') {
+                    setOriginValue('Meta');
+                } else if (origin.toLowerCase() === 'google') {
+                    setOriginValue('Google Ads');
+                } else {
+                    setOriginValue('');
+                }
+            } else {
+                setOriginValue('');
+            }
+    
+            if (country) {
+                const formattedCountry = country
+                    .replace(/_/g, ' ')
+                    .toLowerCase()
+                    .replace(/\b\w/g, (char) => char.toUpperCase());
+                setCountryValue(formattedCountry);
+            } else {
+                setCountryValue('');
+            }
+        }, [searchParams]);
   return (
     <>
     
@@ -45,7 +75,7 @@ export default function Banner() {
          <div>
              <p className='small_heading' style={{lineHeight: "1.2"}}>DUBAI HILLS ESTATE</p>
           <h3 style={{lineHeight: "1.2"}} className='main_heading_margin'>
-  Own a Luxury Home Starting at <span className="line-break">GBP 338K.*</span>
+  Own a Luxury Home Starting at <span className="line-break">{countryValue == "Saudi Arabia" ? "AED 1.62M" : "GBP 338K.*"}</span>
 </h3>
          </div>
 
@@ -53,7 +83,7 @@ export default function Banner() {
 IN DUBAI’S MOST SOUGH-AFTER LOCATIONS.</p>
   <div className='resp_usd'>
         <p className="down_styling" style={{lineHeight: "1.5"}}>
-  *USD 442K / EUR 384K
+  *USD 442K / EUR 384K {countryValue == "Saudi Arabia" ? " / GBP 338K" : ""}
 </p>
 
 <p className="down_styling" style={{lineHeight: "1.5"}}>
