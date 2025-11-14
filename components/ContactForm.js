@@ -216,7 +216,7 @@ export default function ContactForm() {
   return (
     <>
       <div>
-        <section className="banner_form_container" id="contact-form">
+        <section className="banner_form_container" id="contact-form-main">
           <div className="contact-page__bottom">
             <div className="contact-two contact-page-form">
               <div className="">
