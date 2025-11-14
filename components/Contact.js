@@ -197,17 +197,8 @@ export default function Contact() {
             setDisableBtn(false);
 
             if (result.result) {
+              router.push('/thank-you');
                 // Reset form
-                setFormData({
-                    name: '',
-                    phone: '',
-                    email: '',
-                    // country_of_residence: '',
-                    bedrooms: '',
-                    duration: '',
-                    purpose: '',
-                });
-
                 // Reset this form's captcha only
                 setCaptchaToken(null);
                 if (recaptchaRef.current) {
@@ -215,7 +206,14 @@ export default function Contact() {
                 }
 
                 await sendLeadEmail();
-                router.push('/thank-you');
+                setFormData({
+                    name: '',
+                    phone: '',
+                    email: '',
+                    bedrooms: '',
+                    duration: '',
+                    purpose: '',
+                });
             } else {
                 setDisableBtn(false);
                 toast.error(
