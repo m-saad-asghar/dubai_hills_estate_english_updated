@@ -177,7 +177,6 @@ export default function ContactForm() {
 
             if (result.result) {
               router.push('/thank-you');
-              await sendLeadEmail();
                 // Reset form
                 // Reset this form's captcha only
                 setCaptchaToken(null);
