@@ -1,5 +1,6 @@
 import "@/node_modules/react-modal-video/css/modal-video.css"
 import "../public/assets/css/style.css"
+import WhatsAppButton from "../components/CustomComponents/WhatsAppButton";
 import 'swiper/css'
 import Script from 'next/script';
 // import "swiper/css/navigation"
@@ -69,6 +70,19 @@ export default function RootLayout({ children }) {
       </head>
             <body>
                 {children}
+                <div
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+            gap: "50px",
+          }}
+        >
+          <WhatsAppButton />
+        </div>
             </body>
         </html>
     )
